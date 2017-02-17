@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'DXNetworkObserver'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of DXNetworkObserver.'
+  s.summary          = 'Observe App Network Request'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  Observe and notify App network request
                        DESC
 
   s.homepage         = 'https://github.com/dhcdht/DXNetworkObserver'
@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'DXNetworkObserver/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'DXNetworkObserver' => ['DXNetworkObserver/Assets/*.png']
   # }
