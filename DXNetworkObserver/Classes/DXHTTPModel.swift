@@ -11,6 +11,7 @@ import UIKit
 public class DXHTTPModel: NSObject {
     public var request: URLRequest
     public var response: HTTPURLResponse?
+    public var error: Error?
     
     public var startDate: Date
     public var endDate: Date?

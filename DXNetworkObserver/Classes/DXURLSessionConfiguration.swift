@@ -9,7 +9,7 @@
 import UIKit
 
 internal class DXURLSessionConfiguration: NSObject {
-    private(set) var isSwizzle : Bool
+    internal private(set) var isSwizzle : Bool
     
     internal class func `default`() -> DXURLSessionConfiguration {
         struct Static {

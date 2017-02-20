@@ -12,7 +12,6 @@ private let kProtocolPropertyKey = "DXURLProtocol.kProtocolPropertyKey"
 
 internal class DXURLProtocol: URLProtocol, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
     private var startDate: Date?
-    private var data: Data?
     private var connection: NSURLConnection?
     private var httpModel: DXHTTPModel?
     private var response: URLResponse?
@@ -53,7 +52,6 @@ internal class DXURLProtocol: URLProtocol, NSURLConnectionDelegate, NSURLConnect
     
     override func startLoading() {
         self.startDate = Date()
-        self.data = Data()
         
         self.connection = NSURLConnection(request: DXURLProtocol.canonicalRequest(for: self.request), delegate: self, startImmediately: true)
         
@@ -65,15 +63,17 @@ internal class DXURLProtocol: URLProtocol, NSURLConnectionDelegate, NSURLConnect
         
         if let httpURLResponse = self.response as? HTTPURLResponse {
             self.httpModel?.response = httpURLResponse
-            self.httpModel?.endDate = Date()
-            
-            NotificationCenter.default.post(name: kDXNetworkObserverRequestCompleteNotification, object: self.httpModel)
         }
+        
+        self.httpModel?.endDate = Date()
+        NotificationCenter.default.post(name: kDXNetworkObserverRequestCompleteNotification, object: self.httpModel)
     }
     
     // MARK: - NSURLConnectionDelegate
     
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
+        self.httpModel?.error = error;
+        
         self.client?.urlProtocol(self, didFailWithError: error)
     }
     
@@ -104,7 +104,6 @@ internal class DXURLProtocol: URLProtocol, NSURLConnectionDelegate, NSURLConnect
     
     func connection(_ connection: NSURLConnection, didReceive data: Data) {
         self.client?.urlProtocol(self, didLoad: data)
-        self.data?.append(data)
     }
     
     func connection(_ connection: NSURLConnection, willCacheResponse cachedResponse: CachedURLResponse) -> CachedURLResponse? {
